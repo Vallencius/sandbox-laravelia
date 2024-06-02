@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements TrackableUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    /**
+     * The time when the user has registered.
+     */
+    public function getTrackingTime(): CarbonInterface
+    {
+        return $this->created_at;
+    }
 }
