@@ -14,14 +14,3 @@ use PostHog\PostHog;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::domain('{subdomain}.' . env('APP_URL'))->group(function () {
-    Route::get('/', function (Request $request, $subdomain) {
-        $user = Auth::user() ?? 'guest';
-        PostHog::capture([
-            'distinctId' => $subdomain . '-' . $request->ip() . '-' . $user,
-            'event' => 'visitor-count'
-        ]);
-    
-        return view('welcome');
-    });
-});

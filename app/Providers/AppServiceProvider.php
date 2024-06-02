@@ -20,11 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        PostHog::init(
-            'phc_rBGcqoc9RCuB13fHG1Nm0OOIsvIynh6iQajP4niSkpU',
-            [
-                'host' => 'https://us.i.posthog.com'
-            ]
-        );
+        //
     }
 }
