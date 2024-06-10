@@ -20,6 +20,7 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    
     Route::get('/count', function () {
         $visitorsAndPageViews       = Analytics::fetchVisitorsAndPageViews(Period::days(7));
         $totalVisitorsAndPageViews  = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
@@ -29,5 +30,17 @@ Route::domain('{subdomain}.' . env('APP_URL'))->group(function () {
         $topBrowsers                = Analytics::fetchTopBrowsers(Period::days(7));
 
         return view('count', compact('visitorsAndPageViews', 'totalVisitorsAndPageViews', 'mostVisitedPages', 'topReferrers', 'userTypes', 'topBrowsers'));
+    });
+
+    Route::get('/count/all', function() {
+        $hostnameQuery = Analytics::performQuery(
+            Period::days(7), // Last 7 days
+            'ga:sessions',  // Metric
+            [
+                'dimensions' => 'ga:hostname' // Dimension
+            ]
+        );
+    
+        dd($hostnameQuery);
     });
 });
